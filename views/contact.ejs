@@ -1,0 +1,39 @@
+<%- include('layout/header') %> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <div class="card text-center">
+          <% if (data.length < 1) { %>
+            <p>Contact data is empty</p>
+            <a href="/contact/add" class="btn btn-primary" role="button" aria-disabled="true">Add Contact</a>
+            <% } else {%>
+          <div class="card-header">
+            List of Contacts
+          </div>
+          <div class="card-body">
+            <table class="table table-success table-striped">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Number</th>
+
+                <th>Action</th>
+              </tr>
+              <% data.forEach(contacts => { %>
+                <tr>
+                  <td><%= contacts.name %> </td>
+                  <td><%= contacts.email %> </td>
+                  <td><%= contacts.number %> </td>
+
+                  <td>           
+                    <a href="/contact/<%= contacts.id %>/edit" class="btn btn-primary" role="button" aria-disabled="true">Edit</a>
+                    <a href="/contact/<%= contacts.id %>/delete" class="btn btn-primary" role="button" aria-disabled="true">Delete</a>
+
+                  </td>
+              </tr>
+              <% }) %>
+          </table>
+          </div>
+          <a href="/contact/add" class="btn btn-primary" role="button" aria-disabled="true">Add Contact</a>
+        </div>
+      <% } %>
+<%- include('layout/footer') %> 
