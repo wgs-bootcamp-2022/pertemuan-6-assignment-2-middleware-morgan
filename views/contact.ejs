@@ -1,4 +1,5 @@
 <%- include('layout/header') %> 
+      <div class = "container">
         <div class="card text-left w-30">
           <div class="card-header text-center">
             <h5>List of Contacts</h5>
@@ -26,16 +27,15 @@
                   <td><%= contacts.email %> </td>
                   <td><%= contacts.number %> </td>
 
-                  <td>           
-                    <a href="/contact/<%= contacts.id %>/edit" class="btn btn-primary" role="button" aria-disabled="true">Edit</a>
-                    <a href="/contact/<%= contacts.id %>/delete" class="btn btn-primary" role="button" aria-disabled="true">Delete</a>
-
+                  <td> 
+                    <a href="/contact/<%= contacts.id %>/detail" class="btn btn-primary" role="button" aria-disabled="true">Detail</a>
                   </td>
               </tr>
               <% }) %>
           </table>
           </div>
         </div>
-
       <% } %>
+      </div>
+
 <%- include('layout/footer') %> 

@@ -6,6 +6,9 @@ const getHome = (req,res) => {
     res.render('index')
 
 }
+const getAbout = (req, res) => {
+    res.render('about')
+}
 const getAccountData = () => {
     const jsonData = fs.readFileSync(dataPath, 'utf-8')
     return JSON.parse(jsonData)   
@@ -21,7 +24,12 @@ const getContact = (req, res) => {
     const data = JSON.parse(jsonData)   
     res.render('contact', {data})
 }
-
+const getDetailContact = (req, res) => {
+    const accounts = getAccountData()
+    const id = +req.params.id
+    const data = accounts.filter( user => user.id === id )
+    res.render('detailContact',{data})
+}
 const addContact = (req, res) => {
     res.render('add')
 }
@@ -58,7 +66,7 @@ const addPostContact = [
             });
         } 
         // code add post contact
-        const id = Math.floor(Math.random() * 1000); // membuat id random
+        const id = Math.floor(Math.random() * 100000); // membuat id random
         for(i=0; i<dataPath.length;i++){
             dataPath[i].id = id 
         }
@@ -99,6 +107,7 @@ const editPostContact = [
             const data = accounts.filter( user => user.id === id )
             return res.render('editContact', {
                 data,
+                datareq: req.body,
                 errors: errors.array()
             })
         } 
@@ -119,14 +128,16 @@ const editPostContact = [
 const deleteContact = (req, res) => {
     const id = +req.params.id
     const accounts = getAccountData()
-    const filter = accounts.filter(user => user.id != id);
+    const filter = accounts.filter(user => user.id !== id);
     saveAccountData(filter)
     res.redirect('/contact')
 }
 
 module.exports = {
                     getHome, 
+                    getAbout,
                     getContact, 
+                    getDetailContact,
                     addContact,     
                     deleteContact, 
                     updateContact,      
