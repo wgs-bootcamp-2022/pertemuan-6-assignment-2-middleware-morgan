@@ -42,11 +42,11 @@ const isDuplicat = (name) => {
 const isValidationAddContact = [
     [
         body('name').custom(value => {
-            const duplicat = isDuplicat(value);
+            const duplicat = isDuplicat(value)
             if(duplicat) {
-            throw Error('Contact name is already used');
+            throw Error('Contact name is already used')
             }
-            return true;
+            return true
         }),
         check('email', 'Email address is invalid').isEmail(),
         check('number', 'Mobile number is invalid').isMobilePhone('id-ID') 
@@ -81,25 +81,29 @@ const isValidationAddContact = [
 const isValidationEditContact = [
     [
         body('name').custom((value, {req}) => {
-            const duplicat = isDuplicat(value);
-            if (value !== req.body.name && duplicat) {
-                throw new Error('Contact Name is already used');
+            const duplicat = isDuplicat(value)
+            if(duplicat) {
+                throw Error('Contact name is already used')
+            } else if (value !== req.body.name && duplicat) {
+                throw new Error('Contact Name is already used')
             }
-            return true;
+            return true
         }),
         check('email', 'Email address is invalid').isEmail(),
         check('number', 'Mobile number is invalid').isMobilePhone('id-ID') 
     ], 
     (req, res) => {
         const errors = validationResult(req);
+        const accounts = getAccountData()
+        const id = +req.params.id
         if (!errors.isEmpty()) {
+            const data = accounts.filter( user => user.id === id )
             return res.render('editContact', {
+            data,
             errors: errors.array()
-            });
+            })
         } 
         //code edit post contact
-        const id = +req.params.id
-        const accounts = getAccountData()
         let objparam = {
             id: id,
             name: req.body.name,
