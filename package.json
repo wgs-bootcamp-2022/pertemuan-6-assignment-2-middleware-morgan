@@ -15,6 +15,9 @@
     "express": "^4.18.1",
     "express-ejs-layouts": "^2.5.1",
     "express-validator": "^6.14.2",
+    "id-auto-increment": "^1.0.1",
+    "install": "^0.13.0",
+    "npm": "^8.19.1",
     "validation": "^0.0.1",
     "validator": "^13.7.0"
   }

@@ -26,7 +26,6 @@ const addContact = (req, res) => {
     res.render('add')
 }
 
-
 const updateContact = (req, res) => {
     const accounts = getAccountData()
     const id = +req.params.id
@@ -39,7 +38,7 @@ const isDuplicat = (name) => {
     return contacts.find((contact) => contact.name === name );
 }
 
-const isValidationAddContact = [
+const addPostContact = [
     [
         body('name').custom(value => {
             const duplicat = isDuplicat(value)
@@ -78,7 +77,7 @@ const isValidationAddContact = [
     }
 ]
 
-const isValidationEditContact = [
+const editPostContact = [
     [
         body('name').custom((value, {req}) => {
             const duplicat = isDuplicat(value)
@@ -99,8 +98,8 @@ const isValidationEditContact = [
         if (!errors.isEmpty()) {
             const data = accounts.filter( user => user.id === id )
             return res.render('editContact', {
-            data,
-            errors: errors.array()
+                data,
+                errors: errors.array()
             })
         } 
         //code edit post contact
@@ -131,6 +130,6 @@ module.exports = {
                     addContact,     
                     deleteContact, 
                     updateContact,      
-                    isValidationAddContact, 
-                    isValidationEditContact
+                    addPostContact, 
+                    editPostContact
                  }
