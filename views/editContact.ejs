@@ -1,4 +1,5 @@
 <body>
+  <p><h3>Edit Contact</h3></p>
     <% if (typeof errors != 'undefined') { %>
       <div class="alert alert-danger" role="alert">
           <ul>
@@ -10,22 +11,20 @@
     <% } else { %>
       <% data.forEach(element => { %>
       <form  action="/contact/<%=element.id%>/edit" method="POST">
-        <div class="mb-3">
+        <div class="mb-3 w-50">
           <label for="name" class="form-label">Full Name</label>
           <input type="text" class="form-control" name="name" placeholder="<%= element.name %>">
         </div>
-        <div class="mb-3">
+        <div class="mb-3 w-50">
           <label for="email" class="form-label">Email address</label>
           <input type="email" class="form-control" id="email" name="email"  placeholder="<%= element.email %>">
         </div>
-        <div class="mb-3">
+        <div class="mb-3 w-50">
           <label for="number" class="form-label">Number</label>
           <input type="number" class="form-control" id="number" name="number"  placeholder="<%= element.number %>">
         </div>
-      
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       <% }) %>
       <% } %>
-    
-  </body>
+</body>

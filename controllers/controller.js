@@ -1,4 +1,3 @@
-let ejs = require("ejs")
 const fs = require('fs')
 const dataPath = './data/account.json' // path to our JSON file
 const { body, validationResult, check } = require('express-validator'); // Express Validator
@@ -9,10 +8,8 @@ const getHome = (req,res) => {
 }
 const getAccountData = () => {
     const jsonData = fs.readFileSync(dataPath, 'utf-8')
-    console.log(jsonData)
     return JSON.parse(jsonData)   
 }
-
 
 const saveAccountData = (data) => {
     const stringifyData = JSON.stringify(data)
@@ -47,7 +44,7 @@ const isValidationAddContact = [
         body('name').custom(value => {
             const duplicat = isDuplicat(value);
             if(duplicat) {
-            throw Error('Contact number is already used');
+            throw Error('Contact name is already used');
             }
             return true;
         }),
@@ -61,23 +58,23 @@ const isValidationAddContact = [
             errors: errors.array()
             });
         } 
-            // code add post contact
-            const id = Math.floor(Math.random() * 1000); // membuat id random
-            for(i=0; i<dataPath.length;i++){
-                dataPath[i].id = id 
-            }
-            const accounts = getAccountData()
-            let objparam = {
-                id: id,
-                name: req.body.name,
-                email: req.body.email,
-                number: req.body.number
-              }
-            const updateAccount = accounts.filter( contact => contact.id !== id )
-            updateAccount.push(objparam)
-            saveAccountData(updateAccount)
-            res.redirect('/contact')
-        
+        // code add post contact
+        const id = Math.floor(Math.random() * 1000); // membuat id random
+        for(i=0; i<dataPath.length;i++){
+            dataPath[i].id = id 
+        }
+        const accounts = getAccountData()
+        //get param object
+        let objparam = {
+            id: id,
+            name: req.body.name,
+            email: req.body.email,
+            number: req.body.number
+          }
+        const updateAccount = accounts.filter( contact => contact.id !== id )
+        updateAccount.push(objparam)
+        saveAccountData(updateAccount)
+        res.redirect('/contact')
     }
 ]
 
@@ -86,7 +83,7 @@ const isValidationEditContact = [
         body('name').custom((value, {req}) => {
             const duplicat = isDuplicat(value);
             if (value !== req.body.name && duplicat) {
-                throw new Error('Your Name is already used');
+                throw new Error('Contact Name is already used');
             }
             return true;
         }),
@@ -99,20 +96,20 @@ const isValidationEditContact = [
             return res.render('editContact', {
             errors: errors.array()
             });
-        } else {
-            const id = +req.params.id
-            const accounts = getAccountData()
-            let objparam = {
-                id: id,
-                name: req.body.name,
-                email: req.body.email,
-                number: req.body.number
-            }
-            const updateAccount = accounts.filter( contact => contact.id !== id )
-            updateAccount.push(objparam)
-            saveAccountData(updateAccount)
-            res.redirect('/contact')
+        } 
+        //code edit post contact
+        const id = +req.params.id
+        const accounts = getAccountData()
+        let objparam = {
+            id: id,
+            name: req.body.name,
+            email: req.body.email,
+            number: req.body.number
         }
+        const updateAccount = accounts.filter( contact => contact.id !== id )
+        updateAccount.push(objparam)
+        saveAccountData(updateAccount)
+        res.redirect('/contact')
     }
 ]
 
