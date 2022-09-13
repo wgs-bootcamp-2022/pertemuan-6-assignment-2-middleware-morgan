@@ -17,6 +17,7 @@
     "express-validator": "^6.14.2",
     "id-auto-increment": "^1.0.1",
     "install": "^0.13.0",
+    "morgan": "^1.10.0",
     "npm": "^8.19.1",
     "validation": "^0.0.1",
     "validator": "^13.7.0"

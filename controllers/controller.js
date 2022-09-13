@@ -1,13 +1,20 @@
 const fs = require('fs')
 const dataPath = './data/account.json' // path to our JSON file
 const { body, validationResult, check } = require('express-validator'); // Express Validator
+const morgan = require('morgan')
 
 const getHome = (req,res) => {
     res.render('index')
 
 }
-const getAbout = (req, res) => {
+const getAbout = (req, res, next) => {
+    console.log('Time:', Date.now())
+    morgan(':method :url :status :response-time ms - :res[content-length]');
+    // morgan.token('host', function(req, res) {
+    // return req.name;
+    // });
     res.render('about')
+    next()
 }
 const getAccountData = () => {
     const jsonData = fs.readFileSync(dataPath, 'utf-8')
@@ -19,7 +26,9 @@ const saveAccountData = (data) => {
     fs.writeFileSync(dataPath, stringifyData)
 }
 
-const getContact = (req, res) => {
+const getContact = (req, res, next) => {
+    console.log('Time:', Date.now())
+    // next()
     const jsonData = fs.readFileSync(dataPath)
     const data = JSON.parse(jsonData)   
     res.render('contact', {data})
@@ -76,7 +85,8 @@ const addPostContact = [
             id: id,
             name: req.body.name,
             email: req.body.email,
-            number: req.body.number
+            number: req.body.number,
+            address: req.body.address
           }
         const updateAccount = accounts.filter( contact => contact.id !== id )
         updateAccount.push(objparam)

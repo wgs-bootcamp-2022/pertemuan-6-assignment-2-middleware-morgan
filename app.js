@@ -2,12 +2,20 @@ const controller = require('./controllers/controller')
 const expressLayouts = require('express-ejs-layouts')
 const express = require('express');
 const app = express();
+const path = require('path');
+const morgan = require('morgan');
 
 app.use(expressLayouts)
 app.set('layout', './layout/home')
 app.set('view engine', 'ejs');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+
+
+
+app.use('/public', express.static(path.join(__dirname, 'public')))
+
+app.use(morgan('dev'))
 
 app.get('/', controller.getHome);
 app.get('/about', controller.getAbout)

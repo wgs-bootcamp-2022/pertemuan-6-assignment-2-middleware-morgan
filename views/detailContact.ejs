@@ -11,12 +11,14 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Number</th>
+                <th>Address</th>
               </tr>
               <% data.forEach(contacts => { %>
                   <td><%= contacts.id %> </td>
                   <td><%= contacts.name %> </td>
                   <td><%= contacts.email %> </td>
                   <td><%= contacts.number %> </td>
+                  <td><%= contacts.address %> </td>
               </tr>
           </table>
              <div class="card-header">
