@@ -2,6 +2,7 @@ const fs = require('fs')
 const dataPath = './data/account.json' // path to our JSON file
 const { body, validationResult, check } = require('express-validator'); // Express Validator
 const morgan = require('morgan')
+morgan(':method :url :status :response-time ms - :res[content-length]');
 
 const getHome = (req,res) => {
     res.render('index')
@@ -9,10 +10,6 @@ const getHome = (req,res) => {
 }
 const getAbout = (req, res, next) => {
     console.log('Time:', Date.now())
-    morgan(':method :url :status :response-time ms - :res[content-length]');
-    // morgan.token('host', function(req, res) {
-    // return req.name;
-    // });
     res.render('about')
     next()
 }
@@ -69,8 +66,10 @@ const addPostContact = [
     ], 
     (req, res) => {
         const errors = validationResult(req);
+        
         if (!errors.isEmpty()) {
             return res.render('add', {
+            data: req.body,
             errors: errors.array()
             });
         } 
